@@ -34,6 +34,7 @@ fn main() {
             (@arg TOPIC: +required "Sets the kafka topic")
             (@arg BROKERS: +required --brokers +takes_value "Comma-separated kafka brokers")
             (@arg FROMBEG: --beginning "Consume topic from beginning")
+            (@arg GROUP: --group +takes_value "Consumer group_id")
         )
     ).get_matches();
 

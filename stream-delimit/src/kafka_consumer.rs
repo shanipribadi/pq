@@ -44,7 +44,7 @@ impl Iterator for KafkaConsumer {
 
 impl KafkaConsumer {
     /// Return a KafkaConsumer with some basic kafka connection properties
-    pub fn new(brokers: &str, topic: &str, from_beginning: bool) -> Result<KafkaConsumer> {
+    pub fn new(brokers: &str, topic: &str, group: &str, from_beginning: bool) -> Result<KafkaConsumer> {
         let fetch_offset = if from_beginning {
             FetchOffset::Earliest
         } else {
@@ -57,6 +57,7 @@ impl KafkaConsumer {
                 .collect::<Vec<String>>(),
         ).with_topic(topic.to_owned())
             .with_fallback_offset(fetch_offset)
+            .with_group(group.to_owned())
             .create()
         {
             Ok(consumer) => Ok(KafkaConsumer {

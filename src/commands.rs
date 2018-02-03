@@ -28,7 +28,7 @@ impl CommandRunner {
         if let (Some(brokers), Some(topic)) =
             (matches.value_of("BROKERS"), matches.value_of("TOPIC"))
         {
-            let consumer = match KafkaConsumer::new(brokers, topic, matches.is_present("FROMBEG")) {
+            let consumer = match KafkaConsumer::new(brokers, topic, matches.value_of("GROUP").unwrap_or(""), matches.is_present("FROMBEG")) {
                 Ok(x) => x,
                 Err(e) => panic!("Couldn't initialize kafka consumer: {}", e),
             };

@@ -1,6 +1,7 @@
 #![deny(missing_docs)]
 
 use kafka::consumer::{Consumer, FetchOffset};
+use kafka::client::{GroupOffsetStorage};
 use std::{self};
 use std::collections::VecDeque;
 use error::*;
@@ -58,6 +59,7 @@ impl KafkaConsumer {
         ).with_topic(topic.to_owned())
             .with_fallback_offset(fetch_offset)
             .with_group(group.to_owned())
+            .with_offset_storage(GroupOffsetStorage::Kafka)
             .create()
         {
             Ok(consumer) => Ok(KafkaConsumer {
